@@ -37,9 +37,7 @@ def cook_book():
             if not key or not values_number:
                 break
 
-            ingredients = []
-            for i in range(int(values_number)):
-                ingredients.append(f.readline().strip().split(' | '))
+            ingredients = [f.readline().strip().split(' | ') for i in range(int(values_number))]
             f.readline()
 
             cook_book[key] = []
