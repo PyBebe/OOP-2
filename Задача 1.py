@@ -44,7 +44,7 @@ def cook_book():
 
             cook_book[key] = []
             for i in range(int(values_number)):
-                cook_book[key].append({'ingredient_name':ingrediens[i][0], 'quantity':int(ingrediens[i][1]), 'measure':ingrediens[i][2]})
+                cook_book[key].append({'ingredient_name':ingredients[i][0], 'quantity':int(ingredients[i][1]), 'measure':ingredients[i][2]})
     print(cook_book)
 
 cook_book()
