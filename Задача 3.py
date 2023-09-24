@@ -23,33 +23,21 @@ with open('3.txt', 'w') as f3:
 толчею.''')
 
 
-def archivator(file_list):
-    file_archive = []
-    for file in file_list:
-        file_info = {'name':file}
-        with open(file, 'r') as f:
-            data = f.read()
-        file_info['data'] = data
-        with open(file, 'r') as f:
-            lines_counter = 0
-            for index, line in enumerate(f):
-                lines_counter += 1
-        file_info['lines'] = lines_counter
-        file_archive.append(file_info)
-    result = sorted(file_archive, key=lambda x: x['lines'])
-    return result
-
-
 def create_new_file(file_name, file_list):
-    archive = archivator(file_list)
+    archive = {}
+    for file in file_list:
+        with open(file) as f:
+            data = f.readlines()
+            archive[len(data)] = (file, ''.join(data))
+    archive = dict(sorted(archive.items()))
     with open(file_name, 'w') as f:
         f.write('Сортировка файлов по количеству строк:\n')
     with open(file_name, 'a') as f:
-        for text in archive:
-            f.write(f'{text["name"]}\n')
-            f.write(f'{text["lines"]}\n')
-            f.write(f'{text["data"]}\n')
-    with open(file_name, 'r') as f:
+        for key, value in archive.items():
+            f.write(f'{value[0]}\n')
+            f.write(f'{key}\n')
+            f.write(f'{value[1]}\n')
+    with open(file_name) as f:
         data = f.read()
     return data
 
