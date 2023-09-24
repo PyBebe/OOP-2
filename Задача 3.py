@@ -22,30 +22,38 @@ with open('3.txt', 'w') as f3:
      Полицейские  машины  с  включенными  сиренами  пробивались  сквозь  эту
 толчею.''')
 
-files = ['1.txt', '2.txt', '3.txt']
 
-file_archive = []
-for file in files:
-    file_info = {'name':file}
-    with open(file, 'r') as f:
-        data = f.read()
+def archivator(file_list):
+    file_archive = []
+    for file in file_list:
+        file_info = {'name':file}
+        with open(file, 'r') as f:
+            data = f.read()
         file_info['data'] = data
-    with open(file, 'r') as f:
-        lines_counter = 0
-        for index, line in enumerate(f):
-            lines_counter += 1
+        with open(file, 'r') as f:
+            lines_counter = 0
+            for index, line in enumerate(f):
+                lines_counter += 1
         file_info['lines'] = lines_counter
-    file_archive.append(file_info)
-result = sorted(file_archive, key=lambda x: x['lines'])
+        file_archive.append(file_info)
+    result = sorted(file_archive, key=lambda x: x['lines'])
+    return result
 
-with open('4.txt', 'w') as f:
-    f.write('Сортировка файлов по количеству строк:\n')
-with open('4.txt', 'a') as f:
-    for text in result:
-        f.write(f'{text["name"]}\n')
-        f.write(f'{text["lines"]}\n')
-        f.write(f'{text["data"]}\n')
 
-with open('4.txt', 'r') as f:
-    data = f.read()
-    print(data)
+def create_new_file(file_name, file_list):
+    archive = archivator(file_list)
+    with open(file_name, 'w') as f:
+        f.write('Сортировка файлов по количеству строк:\n')
+    with open(file_name, 'a') as f:
+        for text in archive:
+            f.write(f'{text["name"]}\n')
+            f.write(f'{text["lines"]}\n')
+            f.write(f'{text["data"]}\n')
+    with open(file_name, 'r') as f:
+        data = f.read()
+    return data
+
+files = ['1.txt', '2.txt', '3.txt']
+new_file = '4.txt'
+
+print(create_new_file(new_file, files))
